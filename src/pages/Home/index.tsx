@@ -23,17 +23,18 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
-export function Homme() {
-  const { register, handleSubmit, watch } = useForm<NewCycleFormData>({
+export function Home() {
+  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
       task: '',
-      minuteAmount: 0,
+      minutesAmount: 0,
     },
   })
 
   function handleCreateNewCycle(data: NewCycleFormData) {
     console.log('-----', data)
+    reset()
   }
 
   const task = watch('task')
@@ -43,7 +44,7 @@ export function Homme() {
     <HomeContainer>
       <form action="" onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormContainer>
-          <label htmlFor="">Vou trabalhar em</label>
+          <label htmlFor="task">Vou trabalhar em</label>
           <TaskInput
             id="task"
             list="task-suggesttion"
@@ -66,7 +67,7 @@ export function Homme() {
             step={5}
             min={5}
             max={60}
-            {...register('minuteAmount', { valueAsNumber: true })}
+            {...register('minutesAmount', { valueAsNumber: true })}
           />
 
           <span>durante</span>
